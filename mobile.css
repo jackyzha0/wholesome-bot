@@ -1,0 +1,32 @@
+@media all and (max-width: 450px) {
+  footer {
+    position: relative;
+    left: 0;
+  }
+
+  .content-container {
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .inner {
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+
+  #intro_card {
+    margin-left: 10vw;
+  }
+
+  #loader {
+    left: 45%
+  }
+
+  #img {
+    width: 89vw;
+  }
+
+  #vid {
+    width: 89vw;
+  }
+}

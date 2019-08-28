@@ -1,0 +1,105 @@
+<html>
+
+<head>
+  <title>wholesome!</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+  <meta name=viewport content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <div id="intro_card">
+    <h1>wholesome-bot!</h1>
+    <p>bringing some much needed happiness to the internet! ✨</p>
+    <p>press spacebar or click to begin!</p>
+    <hr>
+  </div>
+  <div id="main_card">
+    <div id="loader">
+      <div class="hollowLoader">
+          <div class="largeBox"></div>
+          <div class="smallBox"></div>
+      </div>
+    </div>
+    <div class="content-container">
+      <div class="inner">
+        <div id="content" onclick="getNew()"></div>
+        <div id="text">
+          <p id="title"></p>
+          <a id="link" href="" target="_blank"></a>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  <footer id="footer_u">
+    <p>made with ❤️</p>
+    <p>jacky zhao 2019</p>
+  </footer>
+  <script>
+    function clearContent() {
+      document.getElementById("title").innerHTML = "";
+      document.getElementById("content").innerHTML = "";
+      document.getElementById("link").innerHTML = "";
+      document.getElementById("link").href = "";
+    }
+
+    function insertVideo(sourceUrl) {
+      document.getElementById("content").innerHTML = "<video muted loop id='vid'></video>"
+      var video = document.getElementById('vid');
+      video.pause();
+      var source = document.createElement('source');
+      source.setAttribute('src', sourceUrl);
+      video.appendChild(source);
+      video.load();
+      video.play();
+    }
+
+    function getNew() {
+      clearContent()
+      document.getElementById('loader').style.height = "5vh";
+      document.getElementById('loader').style.opacity = "1";
+      document.getElementById('footer_u').style.opacity = "0";
+      var xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("POST", '/');
+      xmlHttp.send();
+      xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+          document.getElementById('loader').style.height = "0";
+          document.getElementById('loader').style.opacity = "0";
+          document.getElementById('footer_u').style.opacity = "1";
+          var post = JSON.parse(xmlHttp.responseText);
+          document.getElementById("title").innerHTML = post.title;
+          document.getElementById("link").innerHTML = 'link';
+          document.getElementById("link").href = "https://www.reddit.com"+post.plink;
+
+          if (post.is_video) {
+            insertVideo(post.v_url)
+          } else {
+            if (post.url.includes("gifv")) {
+              insertVideo(post.url.replace('.gifv','.mp4'))
+            } else if (post.url.includes("m.imgur.com")) {
+              insertVideo('http://i.imgur.com/' + post.url.split('/').slice(-1)[0] +'.mp4')
+            } else if (post.url.includes("gfycat")) {
+              insertVideo('https://giant.gfycat.com/' + post.gfy.split('%2F')[10].split('-')[0] + '.mp4')
+            } else {
+              document.getElementById("content").innerHTML = "<img id='img'></img>"
+              document.getElementById("img").src = post.url;
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script>
+    getNew()
+    document.body.onkeyup = function(e) {
+      if (e.keyCode == 32) {
+        setTimeout(getNew(), 1000)
+      }
+    }
+  </script>
+</body>
+
+</html>

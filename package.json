@@ -1,0 +1,28 @@
+{
+  "name": "wholesome-bot",
+  "version": "1.0.0",
+  "description": "a wholesome bot that scrapes wholesome subreddits :)",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "snoowrap": "^1.19.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackyzha0/wholesome-bot.git"
+  },
+  "keywords": [
+    "wholesome",
+    "bot"
+  ],
+  "author": "jacky-zhao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jackyzha0/wholesome-bot/issues"
+  },
+  "homepage": "https://github.com/jackyzha0/wholesome-bot#readme"
+}
